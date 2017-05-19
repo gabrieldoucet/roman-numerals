@@ -7,15 +7,24 @@ angular.module('romanNumerals', [])
 
     $scope.error = false;
     $scope.$watch('input', function (newVal) {
-      if (newVal >= 1 && newVal <= 3999) {
-        $scope.error  = false;
-        $scope.result = intToRoman(newVal);
-      } else if (newVal !== null && (newVal < 1 || newVal >= 4000)) {
-        $scope.error  = true;
-        $scope.result = '';
+      // The parsing is executed here to deal with compatibility issues
+      let intValue = parseInt(newVal);
+      if (Number.isInteger(intValue)) {
+        if (intValue >= 1 && intValue <= 3999) {
+          $scope.error  = false;
+          $scope.result = intToRoman(intValue);
+        } else {
+          $scope.error  = true;
+          $scope.result = '';
+        }
       } else {
-        $scope.error  = false;
-        $scope.result = '';
+        if (!newVal) {
+          $scope.error  = false;
+          $scope.result = '';
+        } else {
+          $scope.error  = true;
+          $scope.result = '';
+        }
       }
     });
   }]);
