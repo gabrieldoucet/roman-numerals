@@ -6,8 +6,7 @@ angular.module('romanNumerals', [])
   .controller('mainController', ['$scope', function ($scope) {
 
     $scope.error = false;
-    $scope.$watch('input', function (newVal, oldVal) {
-      console.log(newVal, oldVal);
+    $scope.$watch('input', function (newVal) {
       if (newVal >= 1 && newVal <= 3999) {
         $scope.error  = false;
         $scope.result = intToRoman(newVal);
