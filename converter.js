@@ -3,7 +3,7 @@
  */
 'use strict';
 
-/* The basic roman numerals alphabet, represented as a dictionary
+/* The basic Roman numerals alphabet, represented as a dictionary
  */
 const romanNumeralsDict = {
   1: 'I',
@@ -20,59 +20,59 @@ const romanNumeralsDict = {
  * @param num - The number to decompose
  * @returns {Array.<*>} The decomposition in base 10 ordered by increasing number of powers of ten
  */
-const getBase10Factors = function (num) {
-  let base10Factors = [];
+const getExpandedNotationArray = function (num) {
+  let expandedNotationArray = [];
   for (let i = 3; i >= 0; i--) {
     let power = Math.pow(10, i);
     let coeff = Math.floor(num / power);
-    base10Factors.push(coeff * power);
+    expandedNotationArray.push(coeff * power);
     num = num - coeff * power;
   }
-  return base10Factors.reverse();
+  return expandedNotationArray.reverse();
 };
 
 /**
- * Mapping function used to convert a number in roman numeral.
+ * Mapping function used to convert a number in Roman numeral.
  * @param num - The number being mapped
  * @param index - The index of the element being mapped
- * @returns {string} The corresponding roman numeral
+ * @returns {string} The corresponding Roman numeral
  */
 const mapping = function (num, index) {
-  let ten = Math.pow(10, index);
-  let lowerBound  = ten;
-  let middleBound = 5 * ten;
-  let upperBound  = 10 * ten;
+  let placeValue  = Math.pow(10, index);
+  let lowerBound  = placeValue;
+  let middleBound = 5 * placeValue;
+  let upperBound  = 10 * placeValue;
   let str         = '';
 
-  let tenCount = Math.floor(num / ten);
+  let placeValueCount = Math.floor(num / placeValue);
   // Test if the input number is 1, 5, 10, 50, 100, 500 or 1000, if so, retrieves the value directly from
-  // the dictionnary
-  if (num === ten || num === 5 * ten || num === 10 * ten) {
+  // the dictionary
+  if (num === placeValue || num === 5 * placeValue || num === 10 * placeValue) {
     str = romanNumeralsDict[num];
-  } else if (num > ten && num < 4 * ten) {
-    for (let i = 0; i < tenCount; i++) {
+  } else if (num > placeValue && num < 4 * placeValue) { //  Handles cases like III, XXX or CCC
+    for (let i = 0; i < placeValueCount; i++) {
       str += romanNumeralsDict[lowerBound];
     }
-  } else if (num >= 4 * ten && num < 5 * ten) {
+  } else if (num >= 4 * placeValue && num < 5 * placeValue) { // Handles cases like IV, XL or CD
     str = romanNumeralsDict[lowerBound] + romanNumeralsDict[middleBound];
-  } else if (num > 5 * ten && num < 9 * ten) {
+  } else if (num > 5 * placeValue && num < 9 * placeValue) { // Handles cases like VIII, LXXX or DCCC
     str             = romanNumeralsDict[middleBound];
-    let middleCount = Math.floor((num - middleBound) / ten);
+    let middleCount = Math.floor((num - middleBound) / placeValue);
     for (let i = 0; i < middleCount; i++) {
       str += romanNumeralsDict[lowerBound];
     }
-  } else if (num >= 9 * ten) {
+  } else if (num >= 9 * placeValue) { // Handles cases like IX, XC, CM
     str = romanNumeralsDict[lowerBound] + romanNumeralsDict[upperBound];
   }
   return str;
 };
 
 /**
- * Converts a number in roman numeral.
+ * Converts a number in Roman numeral.
  * @param num - The number to convert
- * @returns {string} The roman numeral
+ * @returns {string} The Roman numeral
  */
 const intToRoman = function (num) {
-  let base10Factors = getBase10Factors(num);
-  return base10Factors.map(mapping).reverse().join('');
+  let expandedNotationArray = getExpandedNotationArray(num);
+  return expandedNotationArray.map(mapping).reverse().join('');
 };
