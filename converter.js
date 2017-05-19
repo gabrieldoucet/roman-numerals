@@ -72,38 +72,38 @@ const mapping = function (num, index) {
  * @param num - The number to convert
  * @returns {string} The roman numeral
  */
-const intToRoman = function (num) {
+export function intToRoman(num) {
   let base10Factors = getBase10Factors(num);
   return base10Factors.map(mapping).reverse().join('');
-};
+}
 
-console.log(intToRoman(process.argv[2]));
+//console.log(intToRoman(process.argv[2]));
 
 /*
-// Testing part with Node and an input csv file
-const fs       = require('fs');
-const readline = require('readline');
-const fstream  = fs.createReadStream('roman-numerals__test.csv');
-const rl       = readline.createInterface({
-  input: fstream,
-});
+ // Testing part with Node and an input csv file
+ const fs       = require('fs');
+ const readline = require('readline');
+ const fstream  = fs.createReadStream('roman-numerals__test.csv');
+ const rl       = readline.createInterface({
+ input: fstream,
+ });
 
-let testCounter     = 0;
-let successfulTests = 0;
+ let testCounter     = 0;
+ let successfulTests = 0;
 
-rl.on('line', function (line) {
-  let tokens        = line.split(',');
-  let int           = parseInt(tokens[0]);
-  let romanFromFile = tokens[1];
-  let roman         = intToRoman(int);
-  if (romanFromFile === roman) {
-    console.log(`Testing ${int}. Expected ${romanFromFile}. Result ${roman}. \u2713`);
-    successfulTests++;
-  }
-  testCounter++;
-});
+ rl.on('line', function (line) {
+ let tokens        = line.split(',');
+ let int           = parseInt(tokens[0]);
+ let romanFromFile = tokens[1];
+ let roman         = intToRoman(int);
+ if (romanFromFile === roman) {
+ console.log(`Testing ${int}. Expected ${romanFromFile}. Result ${roman}. \u2713`);
+ successfulTests++;
+ }
+ testCounter++;
+ });
 
-rl.on('close', function () {
-  console.log('Nothing more to read');
-  console.log(`Tests passed: ${successfulTests}/${testCounter}`);
-}); */
+ rl.on('close', function () {
+ console.log('Nothing more to read');
+ console.log(`Tests passed: ${successfulTests}/${testCounter}`);
+ }); */
